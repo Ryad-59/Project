@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Connexion</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Exo:wght@700;800;900&family=Roboto:wght@400;500;700&display=swap');
+
+        :root {
+            --gta-purple: #e91e63;
+            --gta-cyan: #00bcd4;
+            --gta-lime: #76ff03;
+            --gta-orange: #ff6f00;
+            --gta-dark: #0a0e27;
+            --gta-darker: #050812;
+            --gta-gray: #1a1f3a;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, var(--gta-darker) 0%, #1a0d2e 50%, var(--gta-dark) 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Animated background elements */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(0deg, transparent 24%, rgba(0, 188, 212, 0.05) 25%, rgba(0, 188, 212, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 188, 212, 0.05) 75%, rgba(0, 188, 212, 0.05) 76%, transparent 77%, transparent),
+                linear-gradient(90deg, transparent 24%, rgba(0, 188, 212, 0.05) 25%, rgba(0, 188, 212, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 188, 212, 0.05) 75%, rgba(0, 188, 212, 0.05) 76%, transparent 77%, transparent);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .glow-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.3;
+            z-index: 0;
+        }
+
+        .glow-purple {
+            width: 300px;
+            height: 300px;
+            background: var(--gta-purple);
+            top: -100px;
+            left: -100px;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .glow-cyan {
+            width: 250px;
+            height: 250px;
+            background: var(--gta-cyan);
+            bottom: -80px;
+            right: -80px;
+            animation: float 10s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, 30px); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 420px;
+            padding: 20px;
+        }
+
+        .form-wrapper {
+            background: rgba(26, 31, 58, 0.7);
+            backdrop-filter: blur(20px);
+            border: 2px solid;
+            border-image: linear-gradient(135deg, var(--gta-cyan), var(--gta-purple), var(--gta-lime)) 1;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 0 40px rgba(0, 188, 212, 0.2),
+                0 0 80px rgba(233, 30, 99, 0.1),
+                inset 0 0 60px rgba(0, 188, 212, 0.05);
+        }
+
+        .form-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gta-cyan), transparent);
+            animation: scan 3s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        .header {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .logo {
+            font-family: 'Exo', sans-serif;
+            font-size: 48px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--gta-cyan), var(--gta-purple), var(--gta-lime), var(--gta-orange));
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 4s ease infinite;
+            text-shadow: 0 0 30px rgba(233, 30, 99, 0.5);
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .subtitle {
+            color: var(--gta-cyan);
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--gta-lime);
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(5, 8, 18, 0.5);
+            border: 2px solid rgba(0, 188, 212, 0.3);
+            color: var(--gta-cyan);
+            font-family: 'Roboto', monospace;
+            font-size: 14px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        input::placeholder {
+            color: rgba(0, 188, 212, 0.4);
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--gta-purple);
+            background: rgba(5, 8, 18, 0.8);
+            box-shadow: 
+                0 0 20px rgba(233, 30, 99, 0.3),
+                inset 0 0 15px rgba(233, 30, 99, 0.1);
+        }
+
+        input:focus::placeholder {
+            color: rgba(0, 188, 212, 0.2);
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            font-size: 12px;
+        }
+
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            appearance: none;
+            background: rgba(0, 188, 212, 0.1);
+            border: 2px solid var(--gta-cyan);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        input[type="checkbox"]:checked {
+            background: var(--gta-purple);
+            border-color: var(--gta-purple);
+            box-shadow: 0 0 15px rgba(233, 30, 99, 0.5);
+        }
+
+        input[type="checkbox"]::after {
+            content: '✓';
+            color: var(--gta-lime);
+            font-weight: bold;
+        }
+
+        .remember-text {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        a {
+            color: var(--gta-lime);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--gta-lime);
+            transition: width 0.3s ease;
+        }
+
+        a:hover::after {
+            width: 100%;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--gta-purple), var(--gta-cyan));
+            border: 2px solid var(--gta-lime);
+            color: white;
+            font-family: 'Exo', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(233, 30, 99, 0.4);
+        }
+
+        .btn-login::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 5px 20px rgba(233, 30, 99, 0.5),
+                0 0 40px rgba(0, 188, 212, 0.3),
+                0 0 60px rgba(118, 255, 3, 0.1);
+        }
+
+        .btn-login:hover::before {
+            left: 100%;
+        }
+
+        .btn-login:active {
+            transform: translateY(0);
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .signup-link a {
+            color: var(--gta-orange);
+            font-weight: 700;
+        }
+
+        .neon-line {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gta-cyan), transparent);
+            margin: 20px 0;
+            opacity: 0.5;
+        }
+
+        @media (max-width: 480px) {
+            .form-wrapper {
+                padding: 30px 20px;
+            }
+
+            .logo {
+                font-size: 36px;
+            }
+
+            .header {
+                margin-bottom: 30px;
+            }
+
+            .form-group {
+                margin-bottom: 20px;
+            }
+
+            .btn-login {
+                padding: 14px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+    <div class="glow-orb glow-purple"></div>
+    <div class="glow-orb glow-cyan"></div>
+
+    <div class="container">
+        <div class="form-wrapper">
+            <div class="header">
+                <div class="logo">Connexion </div>
+                <div class="subtitle">Global Terminal Access</subtitle>
+            </div>
+
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="username">Nom d'utilisateur</label>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        name="username"
+                        placeholder="Entrez votre pseudo..."
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Mot de passe</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password"
+                        placeholder="Entrez votre mot de passe..."
+                        required
+                    >
+                </div>
+
+                <div class="remember-forgot">
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" id="remember" name="remember">
+                        <label for="remember" class="remember-text">Se souvenir de moi</label>
+                    </div>
+                    <a href="#">Mot de passe oublié?</a>
+                </div>
+
+                <button type="submit" class="btn-login">Connexion</button>
+            </form>
+
+            <div class="neon-line"></div>
+
+            <div class="signup-link">
+                Pas encore de compte? <a href="/Connexion.html">S'inscrire</a>
+            </div>
+            <a href="/pages daceuille.html">passé</a>
+        </div>
+    </div>
+
+    <script>
+        function handleLogin(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username && password) {
+                alert(`Bienvenue ${username} dans GTA 6! 🎮`);
+                document.getElementById('username').value = '';
+                document.getElementById('password').value = '';
+            }
+        }
+
+        // Add smooth input focus animations
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'scale(1.02)';
+                this.parentElement.style.transition = 'transform 0.3s ease';
+            });
+
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
